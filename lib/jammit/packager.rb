@@ -46,12 +46,14 @@ module Jammit
           end
         end
       end
+      puts "done precaching assets"
     end
 
     # Caches a single prebuilt asset package and gzips it at the highest
     # compression level. Ensures that the modification time of both both
     # variants is identical, for web server caching modules, as well as MHTML.
     def cache(package, extension, contents, output_dir, suffix=nil, mtime=nil)
+      print "."
       FileUtils.mkdir_p(output_dir) unless File.exists?(output_dir)
       raise OutputNotWritable, "Jammit doesn't have permission to write to \"#{output_dir}\"" unless File.writable?(output_dir)
       mtime ||= latest_mtime package_for(package, extension.to_sym)[:paths]
